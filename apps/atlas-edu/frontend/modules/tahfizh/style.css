@@ -1,0 +1,51 @@
+/**
+ * Module: Tahfizh Center
+ * Scope : #module-tahfizh
+ * Do NOT modify global edu-theme.css from here.
+ *
+ * Three-category theming:
+ *   Al-Qur'an  → indigo  #4f46e5
+ *   Hadith     → teal    #0891b2
+ *   Kitab      → purple  #9333ea
+ */
+
+#module-tahfizh input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #e5e7eb;
+    outline: none;
+    cursor: pointer;
+}
+
+#module-tahfizh input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: currentColor;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    cursor: pointer;
+    transition: transform .15s;
+}
+
+#module-tahfizh input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.18);
+}
+
+#module-tahfizh .form-select,
+#module-tahfizh .form-control {
+    font-size: 13px;
+    border-radius: 9px;
+    border: 1.5px solid #e5e7eb;
+    transition: border-color .15s;
+}
+
+#module-tahfizh .form-select:focus,
+#module-tahfizh .form-control:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+}

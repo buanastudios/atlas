@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Atlas Edu — Kit-Style Origin Persona Login</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../atlas-eiam/frontend/assets/css/kit-theme.css">
+
+    <!-- Atlas Edu Modular Stylesheets -->
+    <link rel="stylesheet" href="assets/css/edu-theme.css">
+    <link rel="stylesheet" href="assets/css/pwa-dock.css">
+    <link rel="stylesheet" href="assets/css/persona-grid.css">
+
+    <style>
+        .kit-login-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        .super-app-pill-bar {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 8px;
+        }
+
+        .super-app-pill-btn {
+            font-size: 13px;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-right: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 46px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="bg-light" style="padding-bottom: 80px;">
+
+    <!-- Top Navigation Header Shell -->
+    <header id="edu-main-header" class="kit-header d-flex align-items-center justify-content-between px-4" style="display: none;">
+        <div class="d-flex align-items-center gap-3">
+            <a href="index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                <img src="assets/images/atlas-logo.svg" alt="Atlas Logo" style="height: 34px; width: auto;">
+                <span class="fw-bold fs-5 text-dark tracking-tight">Atlas Edu</span>
+            </a>
+            <span class="badge bg-teal-subtle text-teal font-monospace px-3 py-1">Kit-Style Persona</span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn btn-kit-secondary btn-sm me-2" onclick="AtlasEdu.openLevelVisibilityModal()"><i class="fas fa-sliders-h text-primary me-1"></i> Level Visibility Toggles</button>
+            <span class="small text-muted d-none d-sm-inline" id="user-email-display">director@buana.studio</span>
+            <button class="btn btn-kit-secondary btn-sm" onclick="EduAuth.showLoginScreen()"><i class="fas fa-sign-out-alt me-1 text-danger"></i> Log Out</button>
+        </div>
+    </header>
+
+    <div class="container-fluid p-3 p-md-4">
+        
+        <!-- KIT-STYLE ORIGIN PERSONA LOGIN PAGE (`app.kit.com/users/signup` INSPIRED) -->
+        <div id="screen-login" class="py-4">
+            <div class="kit-login-card">
+                <!-- Kit Logo Header -->
+                <div class="text-center mb-4">
+                    <img src="assets/images/atlas-logo.svg" alt="Atlas Logo" style="height: 44px;" class="mb-3">
+                    <h4 class="fw-bold text-dark mb-1">Log in to Atlas Edu</h4>
+                    <p class="text-muted small">Select your persona account to access the directorate</p>
+                </div>
+
+                <!-- Kit Form -->
+                <form onsubmit="EduAuth.handleKitLoginSubmit(event)">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted text-uppercase tracking-wider">Choose Persona Login Account:</label>
+                        <select id="kit_persona_select" class="form-select form-select-lg" style="font-size: 14px; border-radius: 12px;">
+                            <option value="superadmin">🛡️ Superadmin / Director (superadmin@buana.studio)</option>
+                            <option value="principal">🏫 Unit Principal / Mudir (principal.sma@buana.studio)</option>
+                            <option value="teacher">👩‍🏫 Teacher / Asatidz (ustadz.ahmad@buana.studio)</option>
+                            <option value="parent">👨‍👩‍👧 Parent / Wali Santri (parent.ali@gmail.com)</option>
+                            <option value="student">🎓 Student / Santri (ali.santri@buana.studio)</option>
+                            <option value="vendor">🏬 Vendor & Supplier (catering@vendor.com)</option>
+                            <option value="support">🛎️ Helpers & Support Staff (support@buana.studio)</option>
+                            <option value="admin">🛠️ Administrator & TU (admin.tu@buana.studio)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted">Password</label>
+                        <input type="password" class="form-control form-control-lg" value="••••••••••••" style="font-size: 14px; border-radius: 12px;" required>
+                    </div>
+
+                    <button type="submit" class="btn-kit-primary w-100 py-3 mb-3 fw-bold fs-6" style="border-radius: 12px;">
+                        Log in to Persona Portal <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </form>
+
+                <div class="text-center pt-3 border-top">
+                    <span class="text-muted small">Powered by <strong>Buana Studios</strong></span>
+                    <div class="text-muted" style="font-size: 11px;">Hikmatullah Sakti Buana (@thesaktibuana)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PERSONA ROLE SWITCHER BAR (EXCLUSIVELY FOR SUPERADMIN!) -->
+        <div id="persona-switcher-bar" class="mb-4" style="display: none;">
+            <div class="alert alert-primary py-2 px-3 mb-3 small d-flex align-items-center justify-content-between">
+                <span><i class="fas fa-shield-alt me-2"></i><strong>Superadmin Mode Active:</strong> Full Directorate Control</span>
+                <button class="btn btn-sm btn-light text-primary fw-bold" onclick="AtlasEdu.openLevelVisibilityModal()"><i class="fas fa-sliders-h me-1"></i> Level Visibility Toggles</button>
+            </div>
+        </div>
+
+        <!-- MOBILE-FIRST SMARTPHONE APP LAUNCHER TILE GRID -->
+        <div id="pwa-app-launcher-edu" class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-bold text-dark m-0"><i class="fas fa-th-large text-teal me-2"></i>Directorate Smartphone Apps Suite</h6>
+                <button class="btn btn-sm btn-kit-primary" onclick="AtlasEdu.openAddCustomMenuModal()"><i class="fas fa-plus-circle me-1"></i> Add Custom App Menu</button>
+            </div>
+            
+            <div class="pwa-app-grid mb-4">
+                <div class="pwa-app-tile" onclick="window.scrollTo(0, 400)">
+                    <div class="pwa-app-icon icon-gradient-teal"><i class="fas fa-book-reader"></i></div>
+                    <div class="pwa-app-label">Curriculum</div>
+                </div>
+                <div class="pwa-app-tile" onclick="alert('Opening Calendar Module!')">
+                    <div class="pwa-app-icon icon-gradient-indigo"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="pwa-app-label">Calendar</div>
+                </div>
+                <div class="pwa-app-tile" onclick="alert('Opening PPDB Module!')">
+                    <div class="pwa-app-icon icon-gradient-purple"><i class="fas fa-user-plus"></i></div>
+                    <div class="pwa-app-label">PPDB Online</div>
+                </div>
+                <div class="pwa-app-tile" onclick="alert('Opening Facilities Module!')">
+                    <div class="pwa-app-icon icon-gradient-amber"><i class="fas fa-building"></i></div>
+                    <div class="pwa-app-label">Facilities</div>
+                </div>
+                <div class="pwa-app-tile" onclick="alert('Opening Clubs Module!')">
+                    <div class="pwa-app-icon icon-gradient-emerald"><i class="fas fa-trophy"></i></div>
+                    <div class="pwa-app-label">Clubs & Extra</div>
+                </div>
+                <div class="pwa-app-tile" onclick="alert('Opening SPP Module!')">
+                    <div class="pwa-app-icon icon-gradient-blue"><i class="fas fa-credit-card"></i></div>
+                    <div class="pwa-app-label">SPP Ledger</div>
+                </div>
+                <div class="pwa-app-tile" onclick="AtlasEdu.switchAcademicUnit('idad_prep')">
+                    <div class="pwa-app-icon icon-gradient-rose"><i class="fas fa-globe-americas"></i></div>
+                    <div class="pwa-app-label">TOAFL 'Idad</div>
+                </div>
+                <div class="pwa-app-tile" onclick="AtlasEdu.switchAcademicUnit('diploma2')">
+                    <div class="pwa-app-icon icon-gradient-cyan"><i class="fas fa-certificate"></i></div>
+                    <div class="pwa-app-label">D2 Arabic</div>
+                </div>
+                <div class="pwa-app-tile" onclick="AtlasEdu.openLevelVisibilityModal()">
+                    <div class="pwa-app-icon icon-gradient-red"><i class="fas fa-sliders-h"></i></div>
+                    <div class="pwa-app-label">Toggles</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACADEMIC UNIT DOMAIN ISOLATION SELECTOR BAR -->
+        <div id="academic-unit-bar" class="mb-4">
+            <label class="form-label text-muted small fw-bold text-uppercase tracking-wider"><i class="fas fa-filter me-1 text-indigo"></i>Academic Level Workspace Isolation:</label>
+            <div class="unit-nav-container">
+                <button id="btn-unit-preschool" class="btn unit-tab-btn btn-light" onclick="AtlasEdu.switchAcademicUnit('preschool')"><i class="fas fa-baby"></i> 1. Preschool (TK / PAUD)</button>
+                <button id="btn-unit-primary" class="btn unit-tab-btn btn-light" onclick="AtlasEdu.switchAcademicUnit('primary')"><i class="fas fa-shapes"></i> 2. Primary (SD / MI)</button>
+                <button id="btn-unit-junior" class="btn unit-tab-btn btn-light" onclick="AtlasEdu.switchAcademicUnit('junior')"><i class="fas fa-book-open"></i> 3. Junior High (SMP / MTs)</button>
+                <button id="btn-unit-senior" class="btn unit-tab-btn btn-light" onclick="AtlasEdu.switchAcademicUnit('senior')"><i class="fas fa-graduation-cap"></i> 4. Senior High (SMA / MA)</button>
+                <button id="btn-unit-diploma2" class="btn unit-tab-btn btn-light" onclick="AtlasEdu.switchAcademicUnit('diploma2')"><i class="fas fa-certificate text-warning"></i> 5. D2 Arabic (Ma'had Aly)</button>
+                <button id="btn-unit-idad_prep" class="btn unit-tab-btn btn-indigo active" onclick="AtlasEdu.switchAcademicUnit('idad_prep')"><i class="fas fa-globe-americas text-teal"></i> 6. 'Idad, TOAFL & Overseas Prep</button>
+                <button id="btn-unit-university" class="btn unit-tab-btn btn-light" onclick="AtlasEdu.switchAcademicUnit('university')"><i class="fas fa-university"></i> 7. University (Kampus)</button>
+            </div>
+        </div>
+
+        <!-- SUPER APP CURRICULUM MANAGEMENT HUB WITH CATEGORY PILL BUTTONS -->
+        <div id="mgmt-screen-curriculum" class="mgmt-screen-view mb-4" style="display: block;">
+            <div class="kit-card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold text-dark mb-1"><i class="fas fa-th text-teal me-2"></i>Super App Curriculum Modules Hub</h4>
+                        <p class="text-muted small m-0">Tap any Super App Category Button for instant touch navigation</p>
+                    </div>
+                </div>
+
+                <!-- SUPER APP SEGMENTED CATEGORY PILL BUTTONS BAR -->
+                <div class="super-app-pill-bar mb-3">
+                    <button id="superpill-all" class="btn super-app-pill-btn btn-teal active" onclick="EduCurriculum.filterSuperCategory('all')"><i class="fas fa-th"></i> All Super Modules</button>
+                    <button id="superpill-core" class="btn super-app-pill-btn btn-light" onclick="EduCurriculum.filterSuperCategory('core')"><i class="fas fa-building text-indigo"></i> 1. Core Framework</button>
+                    <button id="superpill-syllabi" class="btn super-app-pill-btn btn-light" onclick="EduCurriculum.filterSuperCategory('syllabi')"><i class="fas fa-file-alt text-teal"></i> 2. Syllabi & Prep</button>
+                    <button id="superpill-specialization" class="btn super-app-pill-btn btn-light" onclick="EduCurriculum.filterSuperCategory('specialization')"><i class="fas fa-flag text-emerald"></i> 3. Specialization & P5</button>
+                    <button id="superpill-research" class="btn super-app-pill-btn btn-light" onclick="EduCurriculum.filterSuperCategory('research')"><i class="fas fa-user-graduate text-purple"></i> 4. Research & Thesis</button>
+                    <button id="superpill-monitoring" class="btn super-app-pill-btn btn-light" onclick="EduCurriculum.filterSuperCategory('monitoring')"><i class="fas fa-chart-line text-amber"></i> 5. Audits & Progress</button>
+                </div>
+
+                <!-- INSTANT TOUCH SEARCH BAR -->
+                <div class="mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="fas fa-search text-teal"></i></span>
+                        <input type="text" id="curriculum-touch-search" class="form-control border-start-0 py-2" 
+                               placeholder="Search curriculum, TOAFL, IELTS, RPP, Hiwar, Skripsi..." 
+                               onkeyup="EduCurriculum.searchCurriculum(this.value)">
+                    </div>
+                </div>
+
+                <!-- UNIFIED SUPER APP TILE GRID CONTAINER -->
+                <div id="curriculum-5pillars-container">
+                    <!-- Dynamic Super App Tiles Loaded Here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ISOLATED ACADEMIC WORKSPACE SCREEN -->
+        <div id="screen-director" class="role-dashboard-screen" style="display: block;">
+            <div class="kit-card p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="fw-bold text-dark mb-1" id="active-unit-title">'Idad Lughawi, TOAFL & Overseas University Prep School (إعداد لغوي / TOAFL / IELTS)</h4>
+                        <p class="text-muted small m-0">Isolated academic problem domain & specialized tools for this unit only</p>
+                    </div>
+                    <span class="badge bg-indigo fs-6 px-3 py-2">Isolated Domain</span>
+                </div>
+
+                <div class="row g-3" id="isolated-unit-modules">
+                    <!-- Dynamic Isolated Unit Modules Loaded Here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PERSISTENT FIXED SMARTPHONE BOTTOM NAVIGATION DOCK -->
+    <nav class="persistent-bottom-dock">
+        <a href="#" id="bnav-home-edu" class="mobile-nav-item active" onclick="window.scrollTo(0,0)">
+            <i class="fas fa-home"></i><span>Home</span>
+        </a>
+        <a href="#" id="bnav-units-edu" class="mobile-nav-item" onclick="AtlasEdu.switchAcademicUnit('senior')">
+            <i class="fas fa-school"></i><span>Units</span>
+        </a>
+        <a href="#" id="bnav-curriculum-edu" class="mobile-nav-item" onclick="window.scrollTo(0,400)">
+            <i class="fas fa-book-reader"></i><span>Curriculum</span>
+        </a>
+        <a href="#" id="bnav-settings-edu" class="mobile-nav-item" onclick="AtlasEdu.openLevelVisibilityModal()">
+            <i class="fas fa-sliders-h"></i><span>Toggles</span>
+        </a>
+    </nav>
+
+    <!-- TOUCH ACTION SHEET MODAL FOR CURRICULUM APP TILES -->
+    <div class="modal fade" id="modalCurriculumTouch" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--kit-radius-lg);">
+                <div class="modal-header border-bottom px-4 py-3">
+                    <h6 class="modal-title fw-bold text-dark" id="touch_curriculum_name">Curriculum Module</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-kit-primary py-3 fw-bold" onclick="alert('Auditing Syllabus & Modul Ajar!')"><i class="fas fa-check-circle me-2"></i> Audit Syllabus & Modul Ajar</button>
+                        <button class="btn btn-outline-indigo py-3 fw-bold" onclick="alert('Assigning Instructor / Asatidz!')"><i class="fas fa-chalkboard-teacher me-2"></i> Assign Instructor & Faculty</button>
+                        <button class="btn btn-outline-secondary py-3 fw-bold" onclick="alert('Exporting PDF/Excel Report!')"><i class="fas fa-file-download me-2"></i> Export Coverage Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN ADJUSTABLE MENU VISIBILITY TOGGLES BY DEGREE LEVEL -->
+    <div class="modal fade" id="modalLevelVisibility" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--kit-radius-lg);">
+                <div class="modal-header border-bottom px-4 py-3">
+                    <h6 class="modal-title fw-bold text-dark"><i class="fas fa-sliders-h text-primary me-2"></i>Admin Menu Visibility Toggles by Education Level Degree</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form onsubmit="AtlasEdu.saveLevelVisibilitySettings(event)">
+                    <div class="modal-body p-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered align-middle small mb-0">
+                                <thead class="table-light text-center">
+                                    <tr>
+                                        <th>Academic Level Degree</th>
+                                        <th>Curriculum & RPP</th>
+                                        <th>'Idad & TOAFL Prep</th>
+                                        <th>TOEFL & IELTS Prep</th>
+                                        <th>Hiwar & Conversation</th>
+                                        <th>SKS/KRS & Skripsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td class="fw-bold">1. Preschool (TK / PAUD)</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox"></td><td class="text-center"><input type="checkbox"></td><td class="text-center"><input type="checkbox"></td><td class="text-center"><input type="checkbox"></td></tr>
+                                    <tr><td class="fw-bold">2. Primary School (SD / MI)</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox"></td><td class="text-center"><input type="checkbox"></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox"></td></tr>
+                                    <tr><td class="fw-bold">3. Junior High (SMP / MTs)</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox"></td></tr>
+                                    <tr><td class="fw-bold">4. Senior High (SMA / MA)</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td></tr>
+                                    <tr><td class="fw-bold">5. D2 Arabic (Ma'had Aly)</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td></tr>
+                                    <tr><td class="fw-bold">6. 'Idad & Overseas Prep</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td></tr>
+                                    <tr><td class="fw-bold">7. University (Kampus)</td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td><td class="text-center"><input type="checkbox" checked></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top px-4 py-3">
+                        <button type="button" class="btn btn-kit-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn-kit-primary"><i class="fas fa-save me-1"></i> Save Level Visibility Toggles</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap 5 JS & Atlas Edu Engines -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/core/edu-store.js"></script>
+    <script src="assets/js/core/edu-auth.js"></script>
+    <script src="assets/js/modules/curriculum.js"></script>
+    <script src="assets/js/edu-app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.EduCurriculum) window.EduCurriculum.renderSuperAppGrid();
+        });
+    </script>
+</body>
+</html>

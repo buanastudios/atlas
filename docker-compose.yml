@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  atlas-eiam:
+    build:
+      context: .
+      dockerfile: apps/atlas-eiam/Dockerfile
+    container_name: atlas-eiam
+    ports:
+      - "8001:8000"
+    environment:
+      - NODE_ENV=production
+      - DB_ENGINE=POSTGRESQL
+      - DB_URI=postgres://atlas:atlaspassword@postgres-eiam:5432/db_atlas_eiam
+    depends_on:
+      - postgres-eiam
+
+  atlas-ledger:
+    build:
+      context: .
+      dockerfile: apps/atlas-ledger/Dockerfile
+    container_name: atlas-ledger
+    ports:
+      - "8002:8000"
+    environment:
+      - NODE_ENV=production
+      - DB_ENGINE=POSTGRESQL
+      - DB_URI=postgres://atlas:atlaspassword@postgres-ledger:5432/db_atlas_ledger
+    depends_on:
+      - postgres-ledger
+
+  postgres-eiam:
+    image: postgres:15-alpine
+    container_name: atlas-db-eiam
+    environment:
+      POSTGRES_DB: db_atlas_eiam
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlaspassword
+    ports:
+      - "5433:5432"
+
+  postgres-ledger:
+    image: postgres:15-alpine
+    container_name: atlas-db-ledger
+    environment:
+      POSTGRES_DB: db_atlas_ledger
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlaspassword
+    ports:
+      - "5434:5432"
+
+networks:
+  default:
+    name: atlas-network

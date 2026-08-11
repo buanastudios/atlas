@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Ledger — Universal Double-Entry Engine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../atlas-eiam/frontend/assets/css/kit-theme.css">
+</head>
+<body class="bg-light">
+
+    <header class="kit-header d-flex align-items-center justify-content-between px-4">
+        <div class="d-flex align-items-center gap-2">
+            <img src="assets/images/atlas-logo.svg" alt="Atlas Logo" style="height: 34px; width: auto;">
+            <span class="fw-bold fs-5 text-dark">Atlas Ledger</span>
+            <span class="badge bg-primary-subtle text-primary">db_atlas_ledger</span>
+        </div>
+        <div class="small text-muted">Powered by <strong>Buana Studios</strong></div>
+    </header>
+
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="fw-bold m-0">Universal Financial Ledger Engine</h4>
+                <p class="text-muted small m-0">Double-Entry Enforcement ($\sum \text{Debits} = \sum \text{Credits}$) & Cross-Subsidy Allocation</p>
+            </div>
+            <button class="btn-kit-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalJournal"><i class="fas fa-plus me-1"></i> Post Journal Entry</button>
+        </div>
+
+        <!-- Ledger Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="kit-card p-3">
+                    <div class="text-muted small fw-semibold">Total Debits</div>
+                    <h4 class="fw-bold text-dark m-0 mt-1" id="stat-debit">Rp 125.000.000</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kit-card p-3">
+                    <div class="text-muted small fw-semibold">Total Credits</div>
+                    <h4 class="fw-bold text-dark m-0 mt-1" id="stat-credit">Rp 125.000.000</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kit-card p-3">
+                    <div class="text-muted small fw-semibold">Double-Entry Status</div>
+                    <h4 class="fw-bold text-success m-0 mt-1"><i class="fas fa-check-circle me-1"></i>BALANCED</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="kit-card p-3">
+                    <div class="text-muted small fw-semibold">Cross-Subsidy Pool</div>
+                    <h4 class="fw-bold text-indigo m-0 mt-1">Rp 18.500.000</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journal Entries Table -->
+        <div class="kit-card mb-4">
+            <div class="kit-card-header">
+                <h6 class="fw-bold m-0"><i class="fas fa-book text-teal me-2"></i>Recent Journal Entries (`journal_entries`)</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Tx Reference</th>
+                            <th>Date</th>
+                            <th>Transaction Description</th>
+                            <th class="text-end">Debit (Rp)</th>
+                            <th class="text-end pe-4">Credit (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="journal-list">
+                        <tr>
+                            <td class="ps-4 fw-semibold">TX-2026-001</td>
+                            <td>2026-08-11</td>
+                            <td>Education Tuition Payment & Commercial POS Cross-Subsidy</td>
+                            <td class="text-end fw-semibold text-teal">15.000.000</td>
+                            <td class="text-end pe-4 fw-semibold text-teal">15.000.000</td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4 fw-semibold">TX-2026-002</td>
+                            <td>2026-08-10</td>
+                            <td>Medical Supplies Procurement for Atlas Health</td>
+                            <td class="text-end fw-semibold text-teal">8.500.000</td>
+                            <td class="text-end pe-4 fw-semibold text-teal">8.500.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Post Journal -->
+    <div class="modal fade" id="modalJournal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: var(--kit-radius-lg);">
+                <div class="modal-header border-bottom px-4 py-3">
+                    <h6 class="modal-title fw-bold text-dark"><i class="fas fa-plus-circle me-2 text-teal"></i>Post New Journal Entry</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Transaction Reference</label>
+                        <input type="text" id="tx_ref" class="form-control" value="TX-2026-003" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Description</label>
+                        <input type="text" id="tx_desc" class="form-control" placeholder="Journal description" required>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold">Amount Debit (Rp)</label>
+                            <input type="number" id="tx_debit" class="form-control" placeholder="5000000" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold">Amount Credit (Rp)</label>
+                            <input type="number" id="tx_credit" class="form-control" placeholder="5000000" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top px-4 py-3">
+                    <button type="button" class="btn btn-kit-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn-kit-primary" onclick="postJournalEntry()">Post Entry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function postJournalEntry() {
+        const ref = document.getElementById('tx_ref').value;
+        const desc = document.getElementById('tx_desc').value;
+        const debit = parseFloat(document.getElementById('tx_debit').value || 0);
+        const credit = parseFloat(document.getElementById('tx_credit').value || 0);
+
+        if (debit !== credit) {
+            alert(`DOUBLE_ENTRY_UNBALANCED: Debits (${debit}) != Credits (${credit})`);
+            return;
+        }
+
+        const tbody = document.getElementById('journal-list');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="ps-4 fw-semibold">${ref}</td>
+            <td>2026-08-11</td>
+            <td>${desc}</td>
+            <td class="text-end fw-semibold text-teal">${debit.toLocaleString('id-ID')}</td>
+            <td class="text-end pe-4 fw-semibold text-teal">${credit.toLocaleString('id-ID')}</td>
+        `;
+        tbody.prepend(tr);
+        bootstrap.Modal.getInstance(document.getElementById('modalJournal')).hide();
+        alert('Journal entry successfully posted & validated!');
+    }
+    </script>
+</body>
+</html>

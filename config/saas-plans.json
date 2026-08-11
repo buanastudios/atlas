@@ -1,0 +1,25 @@
+{
+    "saas_plans": {
+        "STARTER": {
+            "max_tenants": 1,
+            "max_users": 50,
+            "verticals": ["atlas-edu", "atlas-pos"],
+            "custom_domain_allowed": false,
+            "white_label_allowed": false
+        },
+        "PROFESSIONAL": {
+            "max_tenants": 5,
+            "max_users": 500,
+            "verticals": ["atlas-edu", "atlas-pos", "atlas-hris", "atlas-health"],
+            "custom_domain_allowed": true,
+            "white_label_allowed": false
+        },
+        "ENTERPRISE_WHITE_LABEL": {
+            "max_tenants": -1,
+            "max_users": -1,
+            "verticals": ["atlas-eiam", "atlas-ledger", "atlas-hris", "atlas-edu", "atlas-health", "atlas-pos"],
+            "custom_domain_allowed": true,
+            "white_label_allowed": true
+        }
+    }
+}
