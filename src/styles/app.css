@@ -1,0 +1,271 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ── GOOGLE FONTS IMPORT ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Amiri:wght@400;700&display=swap');
+
+/* ── BASE & GLOBAL CSS RESETS ────────────────────────────────────────────── */
+:root {
+  --color-primary: #10b981;
+  --color-primary-glow: rgba(16, 185, 129, 0.35);
+  --color-bg-dark: #090d16;
+  --color-surface: #0f172a;
+  --color-surface-card: rgba(30, 41, 59, 0.7);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --app-safe-top: env(safe-area-inset-top, 0px);
+  --app-safe-bottom: env(safe-area-inset-bottom, 16px);
+  color-scheme: dark;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: radial-gradient(circle at 50% 10%, #131d33 0%, #080c14 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+}
+
+/* ── SMARTPHONE DEVICE HARDWARE FRAME ────────────────────────────────────── */
+.smartphone-container {
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 932px;
+  background: #090d16;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 641px) {
+  .smartphone-container {
+    height: 890px;
+    border-radius: 48px;
+    box-shadow: 
+      0 0 0 10px #1e293b, 
+      0 0 0 13px #334155, 
+      0 30px 80px -10px rgba(0, 0, 0, 0.85),
+      0 0 50px 0 rgba(16, 185, 129, 0.15);
+  }
+}
+
+/* ── DYNAMIC ISLAND & STATUS BAR ─────────────────────────────────────────── */
+.dynamic-island {
+  width: 100px;
+  height: 22px;
+  background: #000000;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.island-camera {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #1e293b, #050508);
+  box-shadow: inset 0 0 2px #000;
+}
+
+.island-sensor {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+/* ── SQUIRCLE APP ICONS & VIBRANT GRADIENTS ───────────────────────────────── */
+.app-icon-squircle {
+  width: 58px;
+  height: 58px;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  position: relative;
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.app-icon-item:hover .app-icon-squircle {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+}
+
+.app-icon-item:active .app-icon-squircle {
+  transform: scale(0.92);
+}
+
+/* Gradient Palette */
+.icon-gradient-indigo {
+  background: linear-gradient(145deg, #6366f1 0%, #3730a3 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-purple {
+  background: linear-gradient(145deg, #a855f7 0%, #6b21a8 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-teal {
+  background: linear-gradient(145deg, #14b8a6 0%, #0f766e 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-blue {
+  background: linear-gradient(145deg, #3b82f6 0%, #1e40af 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-amber {
+  background: linear-gradient(145deg, #f59e0b 0%, #b45309 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-rose {
+  background: linear-gradient(145deg, #f43f5e 0%, #9f1239 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-emerald {
+  background: linear-gradient(145deg, #10b981 0%, #065f46 100%);
+  color: #ffffff;
+}
+
+.icon-gradient-cyan {
+  background: linear-gradient(145deg, #06b6d4 0%, #155e75 100%);
+  color: #ffffff;
+}
+
+/* ── GLASSMORPHISM & CARD COMPONENTS ─────────────────────────────────────── */
+.glass-hero {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.glass-dock {
+  background: rgba(13, 19, 33, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ── CATEGORY PILLS ──────────────────────────────────────────────────────── */
+.category-pill {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  background: rgba(30, 41, 59, 0.7);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.2s ease;
+}
+
+.category-pill:hover {
+  background: rgba(51, 65, 85, 0.9);
+  color: #f8fafc;
+}
+
+.category-pill.active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+/* ── DOCK BUTTONS ────────────────────────────────────────────────────────── */
+.dock-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #64748b;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+  padding: 4px 10px;
+  border-radius: 16px;
+}
+
+.dock-btn .dock-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.dock-btn.active {
+  color: #10b981;
+}
+
+.dock-btn.active .dock-icon-box {
+  background: rgba(16, 185, 129, 0.16);
+  color: #10b981;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+.dock-btn:hover:not(.active) {
+  color: #cbd5e1;
+}
+
+/* ── JIGGLE MANAGE MODE ─────────────────────────────────────────────────── */
+@keyframes jiggle {
+  0% { transform: rotate(-1.2deg); }
+  50% { transform: rotate(1.4deg); }
+  100% { transform: rotate(-1.2deg); }
+}
+
+.app-jiggle {
+  animation: jiggle 0.22s infinite ease-in-out;
+}
+
+/* ── SCROLLBAR UTILITY ───────────────────────────────────────────────────── */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
