@@ -1,0 +1,21 @@
+﻿{
+    "id":  "governance",
+    "category":  "Governance",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/governance/index.js",
+    "color":  "icon-gradient-cyan",
+    "style":  "assets/js/modules/governance/style.css",
+    "globalVar":  "EduGovernanceAudit",
+    "name":  "WTP Audit",
+    "systemRequired":  false,
+    "description":  "COBIT 2019 \u0026 ISO 9001 governance audit, WTP certification, and compliance reporting.",
+    "version":  "1.1.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "governance:read",
+                        "governance:admin"
+                    ],
+    "icon":  "fa-award",
+    "enabledByDefault":  true,
+    "page":  "governance.html"
+}

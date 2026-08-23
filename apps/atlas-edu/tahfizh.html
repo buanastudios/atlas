@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Tahfizh Center — Atlas Edu by Buana Studios">
+    <meta name="theme-color" content="#03ac0e">
+    <title>Tahfizh Center — Atlas Edu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/edu-theme.css">
+    <link rel="stylesheet" href="assets/js/modules/tahfizh/style.css">
+</head>
+<body>
+
+<header id="edu-main-header" class="tokopedia-super-header" style="display:none;">
+    <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
+
+        <!-- Brand -->
+        <a href="#" class="d-flex align-items-center gap-2 text-decoration-none flex-shrink-0">
+            <div class="pwa-app-icon icon-gradient-green" style="width:32px;height:32px;font-size:14px;border-radius:9px;margin:0;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span class="fw-bold tracking-tight" style="font-size:17px;color:var(--text);">Atlas Edu</span>
+        </a>
+
+        <!-- Categorized Search (desktop) -->
+        <div class="flex-grow-1 d-none d-md-block" style="max-width:580px;">
+            <div class="tokopedia-search-box d-flex align-items-center">
+                <select id="search-category" style="border:none;background:transparent;font-size:12px;font-weight:600;color:var(--muted);padding:0 8px 0 12px;outline:none;cursor:pointer;min-width:110px;border-right:1px solid var(--border);height:38px;">
+                    <option value="all">All</option>
+                    <option value="student">Student Name</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="module">Module</option>
+                    <option value="attendance">Attendance</option>
+                    <option value="invoice">Invoice / SPP</option>
+                    <option value="asset">Asset</option>
+                </select>
+                <input id="global-search-input" type="text" class="tokopedia-search-input flex-grow-1"
+                       placeholder="Ketik kata kunci pencarian…"
+                       oninput="EduSearch.run(this.value, document.getElementById('search-category').value)">
+                <button onclick="EduSearch.run(document.getElementById('global-search-input').value, document.getElementById('search-category').value)" style="background:var(--green);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;padding:0 16px;height:36px;margin:2px;cursor:pointer;">Cari</button>
+            </div>
+        </div>
+
+        <!-- Right actions -->
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+            <!-- Unit Badge -->
+            <div id="header-unit-badge" class="unit-identity-badge d-none d-lg-flex gap-2"></div>
+
+            <!-- Rapor Digital button -->
+            <button onclick="EduStudentLifecycle.openRaporDigitalModal()"
+                    style="border-radius:20px;border:1.5px solid var(--teal);color:var(--teal);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-file-alt me-1"></i>Rapor Digital
+            </button>
+
+            <!-- Graduation & Ijazah quick link -->
+            <a href="graduation.html"
+                    style="border-radius:20px;border:1.5px solid #f59e0b;color:#d97706;background:#fffbe0;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-certificate"></i>Graduation &amp; Ijazah
+            </a>
+
+            <!-- WTP button -->
+            <a href="governance.html"
+                    style="border-radius:20px;border:1.5px solid var(--green);color:var(--green);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-award"></i>WTP
+            </a>
+
+            <!-- Circuit Guard button -->
+            <button onclick="AtlasFaultGuard.openHealthDashboardModal()"
+                    style="border-radius:20px;border:1.5px solid #ef4444;color:#ef4444;background:#fef2f2;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-heartbeat me-1"></i>Circuit Guard
+            </button>
+
+            <!-- User email -->
+            <span id="user-email-display" class="small text-muted d-none d-xl-inline"></span>
+
+            <!-- LOG OUT BUTTON -->
+            <button id="btn-logout"
+                    onclick="EduLogin.logout()"
+                    style="border-radius:8px;border:1.5px solid #fca5a5;color:#dc2626;background:#fff5f5;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-sm-inline">Log Out</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- LOGIN SCREEN — form injected by edu-login.js -->
+<div id="screen-login" style="display:none;min-height:100vh;"></div>
+
+<div id="app-viewport">
+    <div id="module-tahfizh" class="pb-5">
+        <div style="background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);padding:20px;color:#fff;">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <a href="dashboard.html" class="btn btn-light btn-sm fw-bold">
+                        <i class="fas fa-arrow-left me-1"></i>Dashboard
+                    </a>
+                    <div>
+                        <h4 class="fw-bold mb-0 text-white">Tahfizh &amp; Mutun Center</h4>
+                        <div class="small opacity-75">Sekolah Calon Huffaz &amp; Ilmuwan Muslim</div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button onclick="EduTahfizh.openContractModal()" class="btn btn-light btn-sm fw-bold text-primary">
+                        <i class="fas fa-file-contract me-1"></i>Kontrak Tahfizh Individual
+                    </button>
+                    <button onclick="EduTahfizh.openKhatModal()" class="btn btn-light btn-sm fw-bold text-purple">
+                        <i class="fas fa-pen-nib me-1"></i>Khat / Kaligrafi
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-3 px-md-4 pt-3" style="max-width:900px;margin:0 auto;">
+            <!-- Qur'an Skill Ladder Banner -->
+            <div class="kit-card p-3 mb-3" style="background:#f8fafc;border-left:4px solid #4f46e5;">
+                <div class="fw-bold mb-1" style="font-size:13px;"><i class="fas fa-graduation-cap me-2 text-indigo"></i>Jenjang Leveling Pembelajaran Qur'an</div>
+                <div class="d-flex gap-2 flex-wrap mt-2">
+                    <span class="badge bg-secondary">Level 1: Iqro / Tilawati</span>
+                    <span class="badge bg-info text-dark">Level 2: Kelancaran Membaca</span>
+                    <span class="badge bg-warning text-dark">Level 3: Tahsin Tajwid</span>
+                    <span class="badge bg-primary">Level 4: Tahfizh Ziyadah</span>
+                    <span class="badge bg-success">Level 5: Mutun &amp; Qira'at</span>
+                </div>
+            </div>
+
+            <!-- Setoran Form -->
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <div class="kit-card p-4">
+                        <h6 class="fw-bold mb-3"><i class="fas fa-plus-circle me-2 text-indigo"></i>Input Setoran Hafalan Baru</h6>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Pilih Santri</label>
+                            <select id="ta-student-id" class="form-select">
+                                <option value="1">Ahmad Fauzan Al-Hakim (XII IPA)</option>
+                                <option value="2">Fatimah Azzahra Putri (IX A)</option>
+                                <option value="3">Muhammad Rizki Ramadhan (VI B)</option>
+                                <option value="4">Siti Aisyah Nur Hidayah (Tahfizh)</option>
+                                <option value="5">Zaid Mubarak Al-Farisi (Idad)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Jenis Setoran</label>
+                            <select id="ta-jenis" class="form-select">
+                                <option value="Hafalan">Ziyadah (Hafalan Baru)</option>
+                                <option value="Murojaah">Murojaah (Pengulangan)</option>
+                                <option value="Tasmi">Tasmi' (Ujian Publik)</option>
+                            </select>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Surah Dari</label>
+                                <input type="text" id="ta-surah-dari" class="form-control" value="Al-Baqarah">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Ayat Dari</label>
+                                <input type="number" id="ta-ayat-dari" class="form-control" value="1">
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Surah Sampai</label>
+                                <input type="text" id="ta-surah-sampai" class="form-control" value="Al-Baqarah">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Ayat Sampai</label>
+                                <input type="number" id="ta-ayat-sampai" class="form-control" value="28">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Nilai Scoring (1-10)</label>
+                            <div class="row g-2">
+                                <div class="col-4"><input type="number" id="ta-nilai-kelancaran" class="form-control" placeholder="Kelancaran" value="9"></div>
+                                <div class="col-4"><input type="number" id="ta-nilai-tajwid" class="form-control" placeholder="Tajwid" value="9"></div>
+                                <div class="col-4"><input type="number" id="ta-nilai-makhraj" class="form-control" placeholder="Makhraj" value="9"></div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Catatan Musyrif</label>
+                            <input type="text" id="ta-catatan" class="form-control" placeholder="Makhraj huruf 'Ain diperjelas">
+                        </div>
+
+                        <button onclick="EduTahfizh.submitSetoran()" class="btn btn-indigo text-white w-100 fw-bold" style="background:#4f46e5;">
+                            <i class="fas fa-save me-1"></i>Simpan Setoran
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contracts & Khat History Column -->
+                <div class="col-12 col-md-6">
+                    <div class="kit-card p-3 mb-3">
+                        <h6 class="fw-bold mb-2"><i class="fas fa-file-contract me-2 text-primary"></i>Kontrak Tahfizh Individual Active</h6>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="p-2 border rounded" style="background:#f0f9ff;font-size:12px;">
+                                <div class="fw-bold text-primary">Ahmad Fauzan Al-Hakim</div>
+                                <div class="text-dark">Target Daily: <strong>28 Ayat / Hari</strong> (30 Juz Target)</div>
+                                <div class="text-muted small">Periode: 2026-08-01 s/d 2027-06-30</div>
+                            </div>
+                            <div class="p-2 border rounded" style="background:#f0f9ff;font-size:12px;">
+                                <div class="fw-bold text-primary">Fatimah Azzahra Putri</div>
+                                <div class="text-dark">Target Daily: <strong>10 Ayat / Hari</strong> (15 Juz Target)</div>
+                                <div class="text-muted small">Periode: 2026-08-01 s/d 2027-06-30</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kit-card p-3">
+                        <h6 class="fw-bold mb-2"><i class="fas fa-pen-nib me-2 text-purple"></i>Catatan Progress Seni Khat / Kaligrafi</h6>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="p-2 border rounded" style="background:#faf5ff;font-size:12px;">
+                                <div class="fw-bold text-purple">Ahmad Fauzan Al-Hakim — Khat Naskhi</div>
+                                <div class="text-muted">Tahap: Kaedah Huruf · Skor: 9/10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/core/edu-store.js"></script>
+<script src="assets/js/core/edu-fault-guard.js"></script>
+<script src="assets/js/core/edu-student-lifecycle.js"></script>
+<script src="assets/js/core/edu-login.js"></script>
+<script src="assets/js/core/edu-auth.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/modules/tahfizh/index.js"></script>
+<script>
+    AtlasLayout.init('tahfizh');
+    function _bootModule() {
+        if (window.EduTahfizh && typeof EduTahfizh.openModule === 'function') {
+            EduTahfizh.openModule();
+        }
+    }
+    window.addEventListener('atlas:ready', _bootModule);
+    document.addEventListener('DOMContentLoaded', _bootModule);
+</script>
+</body>
+</html>

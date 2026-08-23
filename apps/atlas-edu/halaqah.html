@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Absensi KBM — Atlas Edu by Buana Studios">
+    <meta name="theme-color" content="#03ac0e">
+    <title>Absensi KBM — Atlas Edu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/edu-theme.css">
+    <link rel="stylesheet" href="assets/js/modules/halaqah/style.css">
+</head>
+<body>
+
+    <header id="edu-main-header" class="tokopedia-super-header" style="display:none;">
+    <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
+
+        <!-- Brand -->
+        <a href="#" class="d-flex align-items-center gap-2 text-decoration-none flex-shrink-0">
+            <div class="pwa-app-icon icon-gradient-green" style="width:32px;height:32px;font-size:14px;border-radius:9px;margin:0;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span class="fw-bold tracking-tight" style="font-size:17px;color:var(--text);">Atlas Edu</span>
+        </a>
+
+        <!-- Categorized Search (desktop) -->
+        <div class="flex-grow-1 d-none d-md-block" style="max-width:580px;">
+            <div class="tokopedia-search-box d-flex align-items-center">
+                <select id="search-category" style="border:none;background:transparent;font-size:12px;font-weight:600;color:var(--muted);padding:0 8px 0 12px;outline:none;cursor:pointer;min-width:110px;border-right:1px solid var(--border);height:38px;">
+                    <option value="all">All</option>
+                    <option value="student">Student Name</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="module">Module</option>
+                    <option value="attendance">Attendance</option>
+                    <option value="invoice">Invoice / SPP</option>
+                    <option value="asset">Asset</option>
+                </select>
+                <input id="global-search-input" type="text" class="tokopedia-search-input flex-grow-1"
+                       placeholder="Ketik kata kunci pencarian…"
+                       oninput="EduSearch.run(this.value, document.getElementById('search-category').value)">
+                <button onclick="EduSearch.run(document.getElementById('global-search-input').value, document.getElementById('search-category').value)" style="background:var(--green);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;padding:0 16px;height:36px;margin:2px;cursor:pointer;">Cari</button>
+            </div>
+        </div>
+
+        <!-- Right actions -->
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+            <!-- Unit Badge -->
+            <div id="header-unit-badge" class="unit-identity-badge d-none d-lg-flex gap-2"></div>
+
+            <!-- Rapor Digital button -->
+            <button onclick="EduStudentLifecycle.openRaporDigitalModal()"
+                    style="border-radius:20px;border:1.5px solid var(--teal);color:var(--teal);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-file-alt me-1"></i>Rapor Digital
+            </button>
+
+            <!-- Graduation & Ijazah quick link -->
+            <a href="graduation.html"
+                    style="border-radius:20px;border:1.5px solid #f59e0b;color:#d97706;background:#fffbe0;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-certificate"></i>Graduation &amp; Ijazah
+            </a>
+
+            <!-- WTP button -->
+            <a href="governance.html"
+                    style="border-radius:20px;border:1.5px solid var(--green);color:var(--green);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-award"></i>WTP
+            </a>
+
+            <!-- Circuit Guard button -->
+            <button onclick="AtlasFaultGuard.openHealthDashboardModal()"
+                    style="border-radius:20px;border:1.5px solid #ef4444;color:#ef4444;background:#fef2f2;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-heartbeat me-1"></i>Circuit Guard
+            </button>
+
+            <!-- User email -->
+            <span id="user-email-display" class="small text-muted d-none d-xl-inline"></span>
+
+            <!-- LOG OUT BUTTON -->
+            <button id="btn-logout"
+                    onclick="EduLogin.logout()"
+                    style="border-radius:8px;border:1.5px solid #fca5a5;color:#dc2626;background:#fff5f5;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-sm-inline">Log Out</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- LOGIN SCREEN — form injected by edu-login.js -->
+<div id="screen-login" style="display:none;min-height:100vh;"></div>
+
+<div id="app-viewport">
+    <div id="module-halaqah" class="px-3 px-md-4 pb-4">
+        <div class="mt-3">
+            <!-- Header Bar -->
+            <div class="d-flex align-items-center justify-content-between gap-2 mb-3 flex-wrap p-3 rounded-3 text-white" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);">
+                <div class="d-flex align-items-center gap-2">
+                    <a href="dashboard.html" class="btn btn-light btn-sm fw-bold">
+                        <i class="fas fa-arrow-left me-1"></i>Dashboard
+                    </a>
+                    <div>
+                        <h5 class="fw-bold mb-0 text-white"><i class="fas fa-calendar-check me-2"></i>Absensi KBM &amp; Halaqah Daily</h5>
+                        <div class="small opacity-75">Jumat, 15 Agustus 2026 · Total 5 Santri Terdaftar</div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <input type="date" id="halaqah-date-picker" class="form-control form-control-sm" value="2026-08-15" style="width:145px;" onchange="EduHalaqah.changeDate(this.value)">
+                    <button onclick="EduHalaqah.saveAttendance()" class="btn btn-success btn-sm fw-bold">
+                        <i class="fas fa-save me-1"></i>Simpan ke Database
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Pills -->
+            <div class="row row-cols-2 row-cols-md-5 g-2 mb-3">
+                <div class="col">
+                    <div class="kit-card p-2 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2"><span style="width:10px;height:10px;border-radius:50%;background:#03ac0e;display:inline-block;"></span><span class="small fw-bold">Hadir</span></div>
+                        <span class="fw-bold px-2 py-1 rounded" style="background:#03ac0e15;color:#03ac0e;" id="sum-Hadir">3</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-2 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span><span class="small fw-bold">Alpha</span></div>
+                        <span class="fw-bold px-2 py-1 rounded" style="background:#ef444415;color:#ef4444;" id="sum-Alfa">0</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-2 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2"><span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block;"></span><span class="small fw-bold">Sakit</span></div>
+                        <span class="fw-bold px-2 py-1 rounded" style="background:#f59e0b15;color:#f59e0b;" id="sum-Sakit">0</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-2 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2"><span style="width:10px;height:10px;border-radius:50%;background:#0891b2;display:inline-block;"></span><span class="small fw-bold">Izin</span></div>
+                        <span class="fw-bold px-2 py-1 rounded" style="background:#0891b215;color:#0891b2;" id="sum-Izin">1</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-2 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2"><span style="width:10px;height:10px;border-radius:50%;background:#9333ea;display:inline-block;"></span><span class="small fw-bold">Terlambat</span></div>
+                        <span class="fw-bold px-2 py-1 rounded" style="background:#9333ea15;color:#9333ea;" id="sum-Terlambat">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="kit-card p-3 mb-3">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                    <div class="fw-bold" style="font-size:14px;"><i class="fas fa-users me-2 text-indigo"></i>Daftar Santri / Siswa</div>
+                    <input type="text" placeholder="Cari santri / kelas…" oninput="EduHalaqah.filterRoster(this.value)" class="form-control form-control-sm" style="max-width:250px;">
+                </div>
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="kit-card p-0" style="overflow:hidden;">
+                <div style="overflow-x:auto;">
+                    <table class="table table-hover align-middle mb-0" style="font-size:13px;">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width:40px;" class="text-center">#</th>
+                                <th>Nama Santri</th>
+                                <th>Kelas / Unit</th>
+                                <th class="text-center" style="width:340px;">Status Kehadiran</th>
+                                <th>Catatan Musyrif</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center fw-bold text-muted">1</td>
+                                <td><div class="fw-bold text-dark">Ahmad Fauzan Al-Hakim</div><div class="small text-muted">NIS: 2024001</div></td>
+                                <td><span class="badge bg-light text-dark border">XII IPA</span></td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" onclick="EduHalaqah.setStatus(1,'Hadir')" class="btn active" style="background:#03ac0e;color:#fff;font-weight:bold;">Hadir</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(1,'Alfa')" class="btn btn-outline-secondary">Alfa</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(1,'Sakit')" class="btn btn-outline-secondary">Sakit</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(1,'Izin')" class="btn btn-outline-secondary">Izin</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(1,'Terlambat')" class="btn btn-outline-secondary">Terlambat</button>
+                                    </div>
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" placeholder="Catatan khusus…" onchange="EduHalaqah.setNote(1, this.value)"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center fw-bold text-muted">2</td>
+                                <td><div class="fw-bold text-dark">Fatimah Azzahra Putri</div><div class="small text-muted">NIS: 2024002</div></td>
+                                <td><span class="badge bg-light text-dark border">IX A</span></td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" onclick="EduHalaqah.setStatus(2,'Hadir')" class="btn active" style="background:#03ac0e;color:#fff;font-weight:bold;">Hadir</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(2,'Alfa')" class="btn btn-outline-secondary">Alfa</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(2,'Sakit')" class="btn btn-outline-secondary">Sakit</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(2,'Izin')" class="btn btn-outline-secondary">Izin</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(2,'Terlambat')" class="btn btn-outline-secondary">Terlambat</button>
+                                    </div>
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" placeholder="Catatan khusus…" onchange="EduHalaqah.setNote(2, this.value)"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center fw-bold text-muted">3</td>
+                                <td><div class="fw-bold text-dark">Muhammad Rizki Ramadhan</div><div class="small text-muted">NIS: 2024003</div></td>
+                                <td><span class="badge bg-light text-dark border">VI B</span></td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" onclick="EduHalaqah.setStatus(3,'Hadir')" class="btn btn-outline-secondary">Hadir</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(3,'Alfa')" class="btn btn-outline-secondary">Alfa</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(3,'Sakit')" class="btn btn-outline-secondary">Sakit</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(3,'Izin')" class="btn btn-outline-secondary">Izin</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(3,'Terlambat')" class="btn active" style="background:#9333ea;color:#fff;font-weight:bold;">Terlambat</button>
+                                    </div>
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" value="Datang jam 07:45" onchange="EduHalaqah.setNote(3, this.value)"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center fw-bold text-muted">4</td>
+                                <td><div class="fw-bold text-dark">Siti Aisyah Nur Hidayah</div><div class="small text-muted">NIS: 2024004</div></td>
+                                <td><span class="badge bg-light text-dark border">Tahfizh</span></td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" onclick="EduHalaqah.setStatus(4,'Hadir')" class="btn active" style="background:#03ac0e;color:#fff;font-weight:bold;">Hadir</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(4,'Alfa')" class="btn btn-outline-secondary">Alfa</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(4,'Sakit')" class="btn btn-outline-secondary">Sakit</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(4,'Izin')" class="btn btn-outline-secondary">Izin</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(4,'Terlambat')" class="btn btn-outline-secondary">Terlambat</button>
+                                    </div>
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" placeholder="Catatan khusus…" onchange="EduHalaqah.setNote(4, this.value)"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center fw-bold text-muted">5</td>
+                                <td><div class="fw-bold text-dark">Zaid Mubarak Al-Farisi</div><div class="small text-muted">NIS: 2024005</div></td>
+                                <td><span class="badge bg-light text-dark border">Idad</span></td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" onclick="EduHalaqah.setStatus(5,'Hadir')" class="btn btn-outline-secondary">Hadir</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(5,'Alfa')" class="btn btn-outline-secondary">Alfa</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(5,'Sakit')" class="btn btn-outline-secondary">Sakit</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(5,'Izin')" class="btn active" style="background:#0891b2;color:#fff;font-weight:bold;">Izin</button>
+                                        <button type="button" onclick="EduHalaqah.setStatus(5,'Terlambat')" class="btn btn-outline-secondary">Terlambat</button>
+                                    </div>
+                                </td>
+                                <td><input type="text" class="form-control form-control-sm" value="Izin surat dokter" onchange="EduHalaqah.setNote(5, this.value)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/core/edu-store.js"></script>
+<script src="assets/js/core/edu-fault-guard.js"></script>
+<script src="assets/js/core/edu-student-lifecycle.js"></script>
+<script src="assets/js/core/edu-login.js"></script>
+<script src="assets/js/core/edu-auth.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/modules/halaqah/index.js"></script>
+<script>
+    AtlasLayout.init('halaqah');
+    function _bootModule() {
+        if (window.EduHalaqah && typeof EduHalaqah.openModule === 'function') {
+            EduHalaqah.openModule();
+        }
+    }
+    window.addEventListener('atlas:ready', _bootModule);
+    document.addEventListener('DOMContentLoaded', _bootModule);
+</script>
+</body>
+</html>

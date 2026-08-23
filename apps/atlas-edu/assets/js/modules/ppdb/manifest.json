@@ -1,0 +1,21 @@
+﻿{
+    "id":  "ppdb",
+    "category":  "Admissions",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/ppdb/index.js",
+    "color":  "icon-gradient-blue",
+    "style":  "assets/js/modules/ppdb/style.css",
+    "globalVar":  "EduPpdb",
+    "name":  "PPDB Online",
+    "systemRequired":  false,
+    "description":  "New student registration and admissions workflow — multi-step with document tracking.",
+    "version":  "1.1.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "ppdb:read",
+                        "ppdb:write"
+                    ],
+    "icon":  "fa-user-plus",
+    "enabledByDefault":  true,
+    "page":  "ppdb.html"
+}

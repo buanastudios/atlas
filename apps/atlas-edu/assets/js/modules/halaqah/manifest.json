@@ -1,0 +1,18 @@
+{
+  "id": "halaqah",
+  "name": "Absensi KBM",
+  "version": "1.2.0",
+  "icon": "fa-calendar-check",
+  "color": "icon-gradient-indigo",
+  "category": "Diniyah",
+  "page": "halaqah.html",
+  "script": "assets/js/modules/halaqah/index.js",
+  "style": "assets/js/modules/halaqah/style.css",
+  "globalVar": "EduHalaqah",
+  "description": "Attendance management for Halaqah, KBM, and daily Islamic study sessions.",
+  "author": "Buana Studios",
+  "contact": "dev@buana.studio",
+  "enabledByDefault": true,
+  "systemRequired": false,
+  "permissions": ["attendance:read", "attendance:write"]
+}

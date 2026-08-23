@@ -1,0 +1,21 @@
+﻿{
+    "id":  "tahfizh",
+    "category":  "Diniyah",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/tahfizh/index.js",
+    "color":  "icon-gradient-purple",
+    "style":  "assets/js/modules/tahfizh/style.css",
+    "globalVar":  "EduTahfizh",
+    "name":  "Tahfizh Quran",
+    "systemRequired":  false,
+    "description":  "Track and manage Quran memorization progress, setoran, and tahfizh evaluations.",
+    "version":  "2.0.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "tahfizh:read",
+                        "tahfizh:write"
+                    ],
+    "icon":  "fa-quran",
+    "enabledByDefault":  true,
+    "page":  "tahfizh.html"
+}

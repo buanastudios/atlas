@@ -1,0 +1,22 @@
+﻿{
+    "id":  "graduation",
+    "category":  "Academic",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/graduation/index.js",
+    "color":  "icon-gradient-amber",
+    "style":  null,
+    "globalVar":  "EduGraduation",
+    "name":  "Graduation \u0026 Ijazah",
+    "systemRequired":  false,
+    "description":  "4-pillar graduation clearance audit and official cryptographic Ijazah certificate issuance.",
+    "version":  "1.0.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "graduation:read",
+                        "graduation:write",
+                        "ijazah:issue"
+                    ],
+    "icon":  "fa-graduation-cap",
+    "enabledByDefault":  true,
+    "page":  "graduation.html"
+}

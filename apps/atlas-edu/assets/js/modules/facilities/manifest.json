@@ -1,0 +1,21 @@
+﻿{
+    "id":  "facilities",
+    "category":  "Asset",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/facilities/index.js",
+    "color":  "icon-gradient-amber",
+    "style":  "assets/js/modules/facilities/style.css",
+    "globalVar":  "EduFacilities",
+    "name":  "Facilities",
+    "systemRequired":  false,
+    "description":  "Facility and asset booking, maintenance work orders, and room scheduling.",
+    "version":  "1.0.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "facilities:read",
+                        "facilities:write"
+                    ],
+    "icon":  "fa-building",
+    "enabledByDefault":  true,
+    "page":  "facilities.html"
+}

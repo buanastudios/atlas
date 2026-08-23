@@ -1,0 +1,20 @@
+﻿{
+    "id":  "tahun-ajaran",
+    "category":  "Settings",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/tahun-ajaran/index.js",
+    "color":  "icon-gradient-rose",
+    "style":  "assets/js/modules/tahun-ajaran/style.css",
+    "globalVar":  "EduTahunAjaran",
+    "name":  "Tahun Ajaran",
+    "systemRequired":  false,
+    "description":  "Academic year configuration: semester dates, holiday calendars, and school year lifecycle.",
+    "version":  "1.0.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "settings:admin"
+                    ],
+    "icon":  "fa-calendar-alt",
+    "enabledByDefault":  true,
+    "page":  "tahun-ajaran.html"
+}

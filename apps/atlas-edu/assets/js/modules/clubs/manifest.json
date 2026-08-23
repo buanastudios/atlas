@@ -1,0 +1,21 @@
+﻿{
+    "id":  "clubs",
+    "category":  "Activity",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/clubs/index.js",
+    "color":  "icon-gradient-emerald",
+    "style":  "assets/js/modules/clubs/style.css",
+    "globalVar":  "EduClubs",
+    "name":  "Clubs \u0026 Extra",
+    "systemRequired":  false,
+    "description":  "Extracurricular clubs management: members, meetings, achievements, and scheduling.",
+    "version":  "1.0.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "clubs:read",
+                        "clubs:write"
+                    ],
+    "icon":  "fa-trophy",
+    "enabledByDefault":  true,
+    "page":  "clubs.html"
+}

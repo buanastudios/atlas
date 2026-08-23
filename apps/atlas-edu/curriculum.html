@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Curriculum Hub — Atlas Edu by Buana Studios">
+    <meta name="theme-color" content="#03ac0e">
+    <title>Curriculum Hub — Atlas Edu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/edu-theme.css">
+    <link rel="stylesheet" href="assets/js/modules/curriculum/style.css">
+</head>
+<body>
+
+<header id="edu-main-header" class="tokopedia-super-header" style="display:none;">
+    <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
+
+        <!-- Brand -->
+        <a href="#" class="d-flex align-items-center gap-2 text-decoration-none flex-shrink-0">
+            <div class="pwa-app-icon icon-gradient-green" style="width:32px;height:32px;font-size:14px;border-radius:9px;margin:0;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span class="fw-bold tracking-tight" style="font-size:17px;color:var(--text);">Atlas Edu</span>
+        </a>
+
+        <!-- Categorized Search (desktop) -->
+        <div class="flex-grow-1 d-none d-md-block" style="max-width:580px;">
+            <div class="tokopedia-search-box d-flex align-items-center">
+                <select id="search-category" style="border:none;background:transparent;font-size:12px;font-weight:600;color:var(--muted);padding:0 8px 0 12px;outline:none;cursor:pointer;min-width:110px;border-right:1px solid var(--border);height:38px;">
+                    <option value="all">All</option>
+                    <option value="student">Student Name</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="module">Module</option>
+                    <option value="attendance">Attendance</option>
+                    <option value="invoice">Invoice / SPP</option>
+                    <option value="asset">Asset</option>
+                </select>
+                <input id="global-search-input" type="text" class="tokopedia-search-input flex-grow-1"
+                       placeholder="Ketik kata kunci pencarian…"
+                       oninput="EduSearch.run(this.value, document.getElementById('search-category').value)">
+                <button onclick="EduSearch.run(document.getElementById('global-search-input').value, document.getElementById('search-category').value)" style="background:var(--green);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;padding:0 16px;height:36px;margin:2px;cursor:pointer;">Cari</button>
+            </div>
+        </div>
+
+        <!-- Right actions -->
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+            <!-- Unit Badge -->
+            <div id="header-unit-badge" class="unit-identity-badge d-none d-lg-flex gap-2"></div>
+
+            <!-- Rapor Digital button -->
+            <button onclick="EduStudentLifecycle.openRaporDigitalModal()"
+                    style="border-radius:20px;border:1.5px solid var(--teal);color:var(--teal);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-file-alt me-1"></i>Rapor Digital
+            </button>
+
+            <!-- Graduation & Ijazah quick link -->
+            <a href="graduation.html"
+                    style="border-radius:20px;border:1.5px solid #f59e0b;color:#d97706;background:#fffbe0;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-certificate"></i>Graduation &amp; Ijazah
+            </a>
+
+            <!-- WTP button -->
+            <a href="governance.html"
+                    style="border-radius:20px;border:1.5px solid var(--green);color:var(--green);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-award"></i>WTP
+            </a>
+
+            <!-- Circuit Guard button -->
+            <button onclick="AtlasFaultGuard.openHealthDashboardModal()"
+                    style="border-radius:20px;border:1.5px solid #ef4444;color:#ef4444;background:#fef2f2;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-heartbeat me-1"></i>Circuit Guard
+            </button>
+
+            <!-- User email -->
+            <span id="user-email-display" class="small text-muted d-none d-xl-inline"></span>
+
+            <!-- LOG OUT BUTTON -->
+            <button id="btn-logout"
+                    onclick="EduLogin.logout()"
+                    style="border-radius:8px;border:1.5px solid #fca5a5;color:#dc2626;background:#fff5f5;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-sm-inline">Log Out</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- LOGIN SCREEN — form injected by edu-login.js -->
+<div id="screen-login" style="display:none;min-height:100vh;"></div>
+
+<div id="app-viewport">
+    <div id="curriculum-5pillars-container" class="px-3 px-md-4 pb-4">
+        <div class="mb-4 mt-2">
+            <!-- 5-Day Sentra Focus Header -->
+            <div class="p-3 mb-3 text-white rounded-3" style="background: linear-gradient(135deg, #03ac0e 0%, #0d9488 100%);">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div>
+                        <span class="badge bg-white text-dark mb-1 fw-bold" style="font-size:10px;">Visi Institusi</span>
+                        <h5 class="fw-bold mb-0">"Sekolah Calon Huffaz &amp; Ilmuwan Muslim"</h5>
+                        <div class="small opacity-75">Sistem Kurikulum Sentra 5 Hari Rotation: Diniyyah · Sains · Logika · Bahasa · Lifeskill</div>
+                    </div>
+                    <button onclick="EduCurriculum.openRPPModal()" class="btn btn-light btn-sm fw-bold text-success">
+                        <i class="fas fa-plus me-1"></i>Buat Modul Ajar / RPP
+                    </button>
+                </div>
+            </div>
+
+            <!-- 5-Day Matrix -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-2 mb-4">
+                <div class="col">
+                    <div class="kit-card p-3 h-100 text-center border-start border-4 border-success">
+                        <div class="fw-bold text-success" style="font-size:11px;text-transform:uppercase;">Senin</div>
+                        <div class="fw-bold text-dark mt-1" style="font-size:13px;">Sentra Diniyyah &amp; Tahfizh</div>
+                        <div class="small text-muted mt-1" style="font-size:11px;">Al-Quran Setoran, Mutun, Aqidah, Fiqih</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-3 h-100 text-center border-start border-4 border-success">
+                        <div class="fw-bold text-success" style="font-size:11px;text-transform:uppercase;">Selasa</div>
+                        <div class="fw-bold text-dark mt-1" style="font-size:13px;">Sentra Pengetahuan &amp; Sains</div>
+                        <div class="small text-muted mt-1" style="font-size:11px;">Cambridge Science, Lab Experiments, Muslim Scientists</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-3 h-100 text-center border-start border-4 border-success">
+                        <div class="fw-bold text-success" style="font-size:11px;text-transform:uppercase;">Rabu</div>
+                        <div class="fw-bold text-dark mt-1" style="font-size:13px;">Sentra Nalar &amp; Logika</div>
+                        <div class="small text-muted mt-1" style="font-size:11px;">Cambridge Math, Problem Solving, Coding &amp; STEM</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-3 h-100 text-center border-start border-4 border-success">
+                        <div class="fw-bold text-success" style="font-size:11px;text-transform:uppercase;">Kamis</div>
+                        <div class="fw-bold text-dark mt-1" style="font-size:13px;">Sentra Bahasa &amp; Communication</div>
+                        <div class="small text-muted mt-1" style="font-size:11px;">Arabic &amp; English Immersion, Public Speaking</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="kit-card p-3 h-100 text-center border-start border-4 border-success">
+                        <div class="fw-bold text-success" style="font-size:11px;text-transform:uppercase;">Jumat</div>
+                        <div class="fw-bold text-dark mt-1" style="font-size:13px;">Sentra Lifeskill &amp; Olahraga</div>
+                        <div class="small text-muted mt-1" style="font-size:11px;">Sunnah Sports, Entrepreneurship, P5 Karakter</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-Framework Tabs -->
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                <div class="fw-bold" style="font-size:14px;"><i class="fas fa-book-reader me-2 text-teal"></i>Katalog Mata Pelajaran &amp; Modul Ajar</div>
+                <div class="d-flex gap-2">
+                    <button onclick="EduCurriculum.setFramework('ALL')" class="btn btn-sm btn-teal">Semua Framework</button>
+                    <button onclick="EduCurriculum.setFramework('CAMBRIDGE')" class="btn btn-sm btn-outline-secondary">Cambridge</button>
+                    <button onclick="EduCurriculum.setFramework('MERDEKA')" class="btn btn-sm btn-outline-secondary">Merdeka + P5</button>
+                    <button onclick="EduCurriculum.setFramework('DINIYAH')" class="btn btn-sm btn-outline-secondary">Diniyah Pesantren</button>
+                </div>
+            </div>
+
+            <!-- Subjects & RPP Grid -->
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <div class="kit-card p-3">
+                        <h6 class="fw-bold mb-3">Daftar Mata Pelajaran (5)</h6>
+                        <div class="list-group list-group-flush" style="font-size:13px;">
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div><div class="fw-semibold">Al-Qur'an &amp; Tahfizh <span class="text-success me-1">(القرآن والتفيظ)</span></div><div class="small text-muted">DIN-01 · Kategori: Diniyah</div></div>
+                                <span class="badge bg-light text-dark border">10 Jam/Mgg</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div><div class="fw-semibold">Matan Al-Ajurumiyah <span class="text-success me-1">(الآجرومية)</span></div><div class="small text-muted">DIN-02 · Kategori: Diniyah</div></div>
+                                <span class="badge bg-light text-dark border">4 Jam/Mgg</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div><div class="fw-semibold">Cambridge Science Checkpoint <span class="text-success me-1">(العلوم)</span></div><div class="small text-muted">CAM-01 · Kategori: Cambridge</div></div>
+                                <span class="badge bg-light text-dark border">6 Jam/Mgg</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div><div class="fw-semibold">Cambridge Mathematics <span class="text-success me-1">(الرياضيات)</span></div><div class="small text-muted">CAM-02 · Kategori: Cambridge</div></div>
+                                <span class="badge bg-light text-dark border">6 Jam/Mgg</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div><div class="fw-semibold">Proyek Penguatan Profil Pelajar Pancasila (P5)</div><div class="small text-muted">MRD-01 · Kategori: Merdeka</div></div>
+                                <span class="badge bg-light text-dark border">4 Jam/Mgg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="kit-card p-3">
+                        <h6 class="fw-bold mb-3">Modul Ajar / RPP Diajukan</h6>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="p-2 border rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="fw-bold" style="font-size:13px;">Modul Ajar Sentra Sains - Eksperimen Fisika Sederhana</div>
+                                    <span class="badge bg-success">Disetujui</span>
+                                </div>
+                                <div class="small text-muted mt-1">Cambridge Science · Penyusun: Ustadz Ibrahim</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/core/edu-store.js"></script>
+<script src="assets/js/core/edu-fault-guard.js"></script>
+<script src="assets/js/core/edu-student-lifecycle.js"></script>
+<script src="assets/js/core/edu-login.js"></script>
+<script src="assets/js/core/edu-auth.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/edu-app.js"></script>
+<script src="assets/js/modules/curriculum/index.js"></script>
+<script>
+    if (typeof AtlasTemplate === 'undefined') {
+        window.AtlasTemplate = {
+            openModule: function () {},
+            closeModule: function () {},
+            renderSuperAppGrid: function () {}
+        };
+    }
+    AtlasLayout.init('curriculum');
+    function _bootModule() {
+        if (window.EduCurriculum && typeof EduCurriculum.openModule === 'function') {
+            EduCurriculum.openModule();
+        }
+    }
+    window.addEventListener('atlas:ready', _bootModule);
+    document.addEventListener('DOMContentLoaded', _bootModule);
+</script>
+</body>
+</html>

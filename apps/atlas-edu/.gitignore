@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Vercel
+.vercel/
+
+# Local environment variables — NEVER commit these
+.env
+.env.local
+.env.production
+
+# Local SQLite database (dev only)
+local.db
+*.db-shm
+*.db-wal
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

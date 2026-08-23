@@ -1,0 +1,21 @@
+﻿{
+    "id":  "curriculum",
+    "category":  "Academic",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/curriculum/index.js",
+    "color":  "icon-gradient-teal",
+    "style":  "assets/js/modules/curriculum/style.css",
+    "globalVar":  "EduCurriculum",
+    "name":  "Curriculum Hub",
+    "systemRequired":  false,
+    "description":  "21-module curriculum management: syllabi, frameworks, specializations, research, and monitoring.",
+    "version":  "1.3.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "curriculum:read",
+                        "curriculum:write"
+                    ],
+    "icon":  "fa-book-reader",
+    "enabledByDefault":  true,
+    "page":  "curriculum.html"
+}

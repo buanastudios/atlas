@@ -1,0 +1,18 @@
+{
+  "id": "mbg",
+  "name": "Makan Bergizi (MBG)",
+  "version": "1.0.0",
+  "icon": "fa-utensils",
+  "color": "icon-gradient-emerald",
+  "category": "Operational",
+  "page": "mbg.html",
+  "script": "assets/js/modules/mbg/index.js",
+  "style": "assets/js/modules/mbg/style.css",
+  "globalVar": "EduMbg",
+  "description": "Formulir Penerimaan Harian Program Makan Bergizi Gratis (MBG) & Uji Organoleptik Kualitas Makanan SD At-Tibyan.",
+  "author": "Buana Studios",
+  "contact": "dev@buana.studio",
+  "enabledByDefault": true,
+  "systemRequired": false,
+  "permissions": ["mbg:read", "mbg:write", "mbg:approve"]
+}

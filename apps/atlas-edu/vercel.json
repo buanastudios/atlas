@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "name": "atlas-edu",
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin",  "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" },
+        { "key": "Cache-Control",                "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/dashboard",      "destination": "/dashboard.html"    },
+    { "source": "/halaqah",        "destination": "/halaqah.html"      },
+    { "source": "/ppdb",           "destination": "/ppdb.html"         },
+    { "source": "/tuition",        "destination": "/tuition.html"      },
+    { "source": "/facilities",     "destination": "/facilities.html"   },
+    { "source": "/clubs",          "destination": "/clubs.html"        },
+    { "source": "/curriculum",     "destination": "/curriculum.html"   },
+    { "source": "/governance",     "destination": "/governance.html"   },
+    { "source": "/tahun-ajaran",   "destination": "/tahun-ajaran.html" },
+    { "source": "/tahfizh",        "destination": "/tahfizh.html"      },
+    { "source": "/graduation",     "destination": "/graduation.html"   },
+    { "source": "/mbg",            "destination": "/mbg.html"          }
+  ]
+}

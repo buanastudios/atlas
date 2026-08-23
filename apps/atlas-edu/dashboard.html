@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Atlas Edu — Islamic Education Management Super App by Buana Studios">
+    <meta name="theme-color" content="#03ac0e">
+    <title>Atlas Edu — Education Directorate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/edu-theme.css">
+    <style>
+        .step-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 6px; display: block; }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP HEADER — always in DOM, hidden until login
+═══════════════════════════════════════════════════════════════ -->
+<header id="edu-main-header" class="tokopedia-super-header" style="display:none;">
+    <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
+
+        <!-- Brand -->
+        <a href="#" class="d-flex align-items-center gap-2 text-decoration-none flex-shrink-0">
+            <div class="pwa-app-icon icon-gradient-green" style="width:32px;height:32px;font-size:14px;border-radius:9px;margin:0;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span class="fw-bold tracking-tight" style="font-size:17px;color:var(--text);">Atlas Edu</span>
+        </a>
+
+        <!-- Categorized Search (desktop) -->
+        <div class="flex-grow-1 d-none d-md-block" style="max-width:580px;">
+            <div class="tokopedia-search-box d-flex align-items-center">
+                <select id="search-category" style="border:none;background:transparent;font-size:12px;font-weight:600;color:var(--muted);padding:0 8px 0 12px;outline:none;cursor:pointer;min-width:110px;border-right:1px solid var(--border);height:38px;">
+                    <option value="all">All</option>
+                    <option value="student">Student Name</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="module">Module</option>
+                    <option value="attendance">Attendance</option>
+                    <option value="invoice">Invoice / SPP</option>
+                    <option value="asset">Asset</option>
+                </select>
+                <input id="global-search-input" type="text" class="tokopedia-search-input flex-grow-1"
+                       placeholder="Ketik kata kunci pencarian…"
+                       oninput="EduSearch.run(this.value, document.getElementById('search-category').value)">
+                <button onclick="EduSearch.run(document.getElementById('global-search-input').value, document.getElementById('search-category').value)" style="background:var(--green);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;padding:0 16px;height:36px;margin:2px;cursor:pointer;">Cari</button>
+            </div>
+        </div>
+
+        <!-- Right actions -->
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+            <!-- Unit Badge -->
+            <div id="header-unit-badge" class="unit-identity-badge d-none d-lg-flex gap-2"></div>
+
+            <!-- Rapor Digital button -->
+            <button onclick="EduStudentLifecycle.openRaporDigitalModal()"
+                    style="border-radius:20px;border:1.5px solid var(--teal);color:var(--teal);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-file-alt me-1"></i>Rapor Digital
+            </button>
+
+            <!-- Graduation & Ijazah quick link -->
+            <a href="graduation.html"
+                    style="border-radius:20px;border:1.5px solid #f59e0b;color:#d97706;background:#fffbe0;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-certificate"></i>Graduation &amp; Ijazah
+            </a>
+
+            <!-- WTP button -->
+            <a href="governance.html"
+                    style="border-radius:20px;border:1.5px solid var(--green);color:var(--green);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-award"></i>WTP
+            </a>
+
+            <!-- Circuit Guard button -->
+            <button onclick="AtlasFaultGuard.openHealthDashboardModal()"
+                    style="border-radius:20px;border:1.5px solid #ef4444;color:#ef4444;background:#fef2f2;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-heartbeat me-1"></i>Circuit Guard
+            </button>
+
+            <!-- User email -->
+            <span id="user-email-display" class="small text-muted d-none d-xl-inline"></span>
+
+            <!-- LOG OUT BUTTON -->
+            <button id="btn-logout"
+                    onclick="EduLogin.logout()"
+                    style="border-radius:8px;border:1.5px solid #fca5a5;color:#dc2626;background:#fff5f5;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-sm-inline">Log Out</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- LOGIN SCREEN — form injected by edu-login.js -->
+<div id="screen-login" style="display:none;min-height:100vh;"></div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN APP VIEWPORT (session-gated)
+═══════════════════════════════════════════════════════════════ -->
+<div id="app-viewport" style="display:none;">
+    <div class="px-3 px-md-4 pt-3" id="main-content-area">
+
+        <!-- Hero Banner -->
+        <div class="tokopedia-hero-carousel p-4 p-md-5 mb-3">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="fw-semibold mb-1" style="color:rgba(255,255,255,0.65);font-size:12px;">Tahun Ajaran 2026/2027</div>
+                    <h3 class="fw-bold text-white mb-1" style="font-size:clamp(18px,3vw,26px);">Direktorat Pendidikan</h3>
+                    <p class="mb-0" style="color:rgba(255,255,255,0.65);font-size:13px;" id="hero-unit-context">Selamat datang di portal pendidikan.</p>
+                </div>
+                <div class="col-md-4 text-end d-none d-md-block">
+                    <div style="color:rgba(255,255,255,0.5);font-size:11px;" id="hero-user-info"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── PLUGGABLE APP LAUNCHER ─────────────────────────────── -->
+        <div id="pwa-launcher-root" class="mb-4">
+            <!-- AtlasLauncher.render() writes here after login -->
+        </div>
+
+        <!-- Active Unit Workspace -->
+        <div id="screen-director" class="kit-card p-3 mb-3">
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                <div>
+                    <div class="section-heading" id="active-unit-title">Workspace</div>
+                    <div class="section-subheading" id="active-unit-subtitle"></div>
+                </div>
+            </div>
+            <div class="row g-2" id="isolated-unit-modules"></div>
+        </div>
+
+        <!-- Curriculum Hub -->
+        <div id="mgmt-screen-curriculum" class="kit-card p-3 mb-3">
+            <div class="mb-3">
+                <div class="section-heading"><i class="fas fa-book-reader text-green me-2"></i>Curriculum Module Hub</div>
+                <div class="section-subheading">21 interactive modules — tap to launch procedure</div>
+            </div>
+            <div class="super-app-pill-bar mb-3">
+                <button id="superpill-all"            class="super-app-pill-btn active" onclick="window.location.href='curriculum.html'"><i class="fas fa-th me-1"></i>Open Curriculum</button>
+            </div>
+            <div id="curriculum-5pillars-container"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PERSISTENT BOTTOM DOCK
+═══════════════════════════════════════════════════════════════ -->
+<nav class="persistent-bottom-dock" style="display:none;">
+    <a href="dashboard.html" class="mobile-nav-item active" style="text-decoration:none;">
+        <i class="fas fa-home"></i><span>Home</span>
+    </a>
+    <a href="halaqah.html" class="mobile-nav-item" style="text-decoration:none;">
+        <i class="fas fa-calendar-check"></i><span>Absensi</span>
+    </a>
+    <a href="tahfizh.html" class="mobile-nav-item" style="text-decoration:none;">
+        <i class="fas fa-quran"></i><span>Tahfizh</span>
+    </a>
+    <a href="graduation.html" class="mobile-nav-item" style="text-decoration:none;">
+        <i class="fas fa-certificate"></i><span>Graduation</span>
+    </a>
+    <a href="ppdb.html" class="mobile-nav-item" style="text-decoration:none;">
+        <i class="fas fa-user-plus"></i><span>PPDB</span>
+    </a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════════════════════ -->
+<!-- WTP Governance -->
+<div class="modal fade" id="modalGovernanceAudit" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg" style="border-radius:20px;">
+            <div class="modal-header px-4 py-3" style="background:linear-gradient(135deg,#03ac0e,#0d9488);border-radius:20px 20px 0 0;border:none;">
+                <h5 class="modal-title fw-bold text-white"><i class="fas fa-award me-2"></i>Enterprise Governance · COBIT 2019 · ISO 9001 · WTP</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4" id="governance_dashboard_content"></div>
+            <div class="modal-footer px-4 py-3">
+                <button class="btn btn-light fw-bold rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+                <button class="btn-primary-atlas px-4 rounded-pill" onclick="alert('Exporting Official WTP Audit Report!')"><i class="fas fa-file-pdf"></i>Export PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Level Visibility -->
+<div class="modal fade" id="modalLevelVisibility" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius:20px;">
+            <div class="modal-header px-4 py-3 border-bottom">
+                <h5 class="modal-title fw-bold"><i class="fas fa-sliders-h text-green me-2"></i>Menu Visibility by Level</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted small mb-3">Toggle which academic level menus are visible in the launcher.</p>
+                <div class="d-flex flex-column gap-1">
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom"><span class="fw-semibold small">Preschool (TK/PAUD)</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom"><span class="fw-semibold small">Primary (SD/MI)</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom"><span class="fw-semibold small">Junior High (SMP/MTs)</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom"><span class="fw-semibold small">Senior High (SMA/MA)</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom"><span class="fw-semibold small">D2 Arabic (Ma'had Aly)</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom"><span class="fw-semibold small">'Idad & TOAFL Prep</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                    <div class="d-flex align-items-center justify-content-between py-2"><span class="fw-semibold small">University (Kampus)</span><div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox" checked style="width:40px;height:20px;"></div></div>
+                </div>
+            </div>
+            <div class="modal-footer px-4 py-3">
+                <button class="btn-primary-atlas w-100 rounded-pill justify-content-center" onclick="AtlasEdu.saveLevelVisibilitySettings(event)"><i class="fas fa-save"></i>Save Settings</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Custom App -->
+<div class="modal fade" id="modalAddCustomApp" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius:20px;">
+            <div class="modal-header px-4 py-3 border-bottom">
+                <h5 class="modal-title fw-bold"><i class="fas fa-plus-circle text-green me-2"></i>Add Custom App Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form onsubmit="AtlasEdu.saveCustomMenuForm(event)">
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">App Title</label>
+                        <input type="text" id="custom_app_title" class="form-control" placeholder="E.g., Daily Hifzh Log" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">FontAwesome Icon Class</label>
+                        <input type="text" class="form-control" value="fas fa-star">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Color Theme</label>
+                        <select class="form-select">
+                            <option>Teal-Cyan</option><option>Indigo-Purple</option><option>Amber-Red</option><option>Emerald-Green</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer px-4 py-3">
+                    <button type="submit" class="btn-primary-atlas w-100 rounded-pill justify-content-center"><i class="fas fa-plus"></i>Add to Launcher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     JS
+═══════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- NOTE: template-engine and audit-engine are vendored inline below for Vercel compatibility -->
+<script>
+  // Minimal stub for AtlasTemplate (replace with real vendor bundle if available)
+  window.AtlasTemplate = window.AtlasTemplate || {
+    render: function(type, data) {
+      if (!Array.isArray(data)) return '';
+      if (type === 'CardGrid') {
+        return data.map(function(c) {
+          return '<div class="col-6 col-md-4 col-lg-3"><div class="card h-100 border-0 shadow-sm" style="cursor:pointer" onclick="' + (c.onClick || '') + '"><div class="card-body d-flex flex-column align-items-center text-center gap-2 py-4"><div class="pwa-app-icon ' + c.color + '" style="width:48px;height:48px;font-size:20px"><i class="' + c.icon + '"></i></div><div class="fw-700" style="font-size:13px">' + c.title + '</div><span class="badge bg-' + c.badgeColor + ' rounded-pill" style="font-size:10px">' + c.status + '</span></div></div></div>';
+        }).join('');
+      }
+      return '';
+    }
+  };
+</script>
+<script src="assets/js/core/edu-store.js"></script>
+<script src="assets/js/core/edu-fault-guard.js"></script>
+<script src="assets/js/core/edu-student-lifecycle.js"></script>
+<script src="assets/js/core/edu-login.js"></script>
+<script src="assets/js/core/edu-auth.js"></script>
+<script src="assets/js/app-registry.js"></script>
+<script src="assets/js/app-launcher.js"></script>
+
+
+<!-- ── App launcher & core engine ──────────────────────────── -->
+<script src="assets/js/modules/search-engine.js"></script>
+<script src="assets/js/edu-app.js"></script>
+
+<script>
+function _bootLauncher() {
+    if (window.AtlasLauncher) {
+        AtlasLauncher.render('pwa-launcher-root');
+    }
+}
+document.addEventListener('DOMContentLoaded', _bootLauncher);
+window.addEventListener('atlas:login', _bootLauncher);
+setTimeout(_bootLauncher, 100);
+</script>
+
+</body>
+</html>

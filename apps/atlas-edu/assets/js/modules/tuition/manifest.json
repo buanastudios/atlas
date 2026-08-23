@@ -1,0 +1,21 @@
+﻿{
+    "id":  "tuition",
+    "category":  "Finance",
+    "contact":  "dev@buana.studio",
+    "script":  "assets/js/modules/tuition/index.js",
+    "color":  "icon-gradient-teal",
+    "style":  "assets/js/modules/tuition/style.css",
+    "globalVar":  "EduTuition",
+    "name":  "SPP Ledger",
+    "systemRequired":  false,
+    "description":  "Monthly tuition (SPP) payment tracking, receipts, and financial ledger per student.",
+    "version":  "1.0.0",
+    "author":  "Buana Studios",
+    "permissions":  [
+                        "finance:read",
+                        "finance:write"
+                    ],
+    "icon":  "fa-credit-card",
+    "enabledByDefault":  true,
+    "page":  "tuition.html"
+}

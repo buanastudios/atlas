@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Graduation & Digital Ijazah — Atlas Edu by Buana Studios">
+    <meta name="theme-color" content="#03ac0e">
+    <title>Graduation &amp; Digital Ijazah — Atlas Edu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/edu-theme.css">
+    <link rel="stylesheet" href="assets/js/modules/graduation/style.css">
+</head>
+<body>
+
+    <header id="edu-main-header" class="tokopedia-super-header" style="display:none;">
+    <div class="container-fluid d-flex align-items-center justify-content-between gap-3">
+
+        <!-- Brand -->
+        <a href="#" class="d-flex align-items-center gap-2 text-decoration-none flex-shrink-0">
+            <div class="pwa-app-icon icon-gradient-green" style="width:32px;height:32px;font-size:14px;border-radius:9px;margin:0;">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span class="fw-bold tracking-tight" style="font-size:17px;color:var(--text);">Atlas Edu</span>
+        </a>
+
+        <!-- Categorized Search (desktop) -->
+        <div class="flex-grow-1 d-none d-md-block" style="max-width:580px;">
+            <div class="tokopedia-search-box d-flex align-items-center">
+                <select id="search-category" style="border:none;background:transparent;font-size:12px;font-weight:600;color:var(--muted);padding:0 8px 0 12px;outline:none;cursor:pointer;min-width:110px;border-right:1px solid var(--border);height:38px;">
+                    <option value="all">All</option>
+                    <option value="student">Student Name</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="module">Module</option>
+                    <option value="attendance">Attendance</option>
+                    <option value="invoice">Invoice / SPP</option>
+                    <option value="asset">Asset</option>
+                </select>
+                <input id="global-search-input" type="text" class="tokopedia-search-input flex-grow-1"
+                       placeholder="Ketik kata kunci pencarian…"
+                       oninput="EduSearch.run(this.value, document.getElementById('search-category').value)">
+                <button onclick="EduSearch.run(document.getElementById('global-search-input').value, document.getElementById('search-category').value)" style="background:var(--green);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;padding:0 16px;height:36px;margin:2px;cursor:pointer;">Cari</button>
+            </div>
+        </div>
+
+        <!-- Right actions -->
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
+            <!-- Unit Badge -->
+            <div id="header-unit-badge" class="unit-identity-badge d-none d-lg-flex gap-2"></div>
+
+            <!-- Rapor Digital button -->
+            <button onclick="EduStudentLifecycle.openRaporDigitalModal()"
+                    style="border-radius:20px;border:1.5px solid var(--teal);color:var(--teal);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-file-alt me-1"></i>Rapor Digital
+            </button>
+
+            <!-- Graduation & Ijazah quick link -->
+            <a href="graduation.html"
+                    style="border-radius:20px;border:1.5px solid #f59e0b;color:#d97706;background:#fffbe0;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-certificate"></i>Graduation &amp; Ijazah
+            </a>
+
+            <!-- WTP button -->
+            <a href="governance.html"
+                    style="border-radius:20px;border:1.5px solid var(--green);color:var(--green);background:transparent;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;">
+                <i class="fas fa-award"></i>WTP
+            </a>
+
+            <!-- Circuit Guard button -->
+            <button onclick="AtlasFaultGuard.openHealthDashboardModal()"
+                    style="border-radius:20px;border:1.5px solid #ef4444;color:#ef4444;background:#fef2f2;font-size:12px;font-weight:700;padding:7px 14px;cursor:pointer;white-space:nowrap;">
+                <i class="fas fa-heartbeat me-1"></i>Circuit Guard
+            </button>
+
+            <!-- User email -->
+            <span id="user-email-display" class="small text-muted d-none d-xl-inline"></span>
+
+            <!-- LOG OUT BUTTON -->
+            <button id="btn-logout"
+                    onclick="EduLogin.logout()"
+                    style="border-radius:8px;border:1.5px solid #fca5a5;color:#dc2626;background:#fff5f5;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="d-none d-sm-inline">Log Out</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- LOGIN SCREEN — form injected by edu-login.js -->
+<div id="screen-login" style="display:none;min-height:100vh;"></div>
+
+<div id="app-viewport">
+    <div id="module-graduation" class="px-3 px-md-4 pb-4">
+        <div class="mt-3">
+            <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
+                <a href="dashboard.html" class="btn btn-outline-secondary btn-sm fw-bold">
+                    <i class="fas fa-arrow-left me-1"></i>Kembali
+                </a>
+                <div class="flex-grow-1">
+                    <h5 class="fw-bold mb-0">Graduation Clearance &amp; Digital Ijazah Issuer</h5>
+                    <div style="font-size:12px;color:var(--muted);">4-Pillar Clearance Audit (Academic, Tahfizh, Character, Finance)</div>
+                </div>
+            </div>
+
+            <div class="kit-card p-4 mb-3" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color:#fff;">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div>
+                        <span class="badge bg-white text-dark mb-1 fw-bold">Sistem Verifikasi Kelulusan</span>
+                        <h4 class="fw-bold mb-0">Audit Clearance Kelulusan Santri</h4>
+                        <div class="small opacity-75">Verifikasi Cryptographic SHA-256 Ijazah Digital</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kit-card p-3 mb-3">
+                <h6 class="fw-bold mb-3"><i class="fas fa-certificate me-2 text-warning"></i>Daftar Santri Calon Wisudawan</h6>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" style="font-size:13px;">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nama Santri</th>
+                                <th>IPK / Rata2</th>
+                                <th>Tahfizh Target</th>
+                                <th>Point Karakter</th>
+                                <th>Status Keuangan</th>
+                                <th>Status Clearance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="fw-bold">Ahmad Fauzan Al-Hakim</div><div class="small text-muted">NIS: 2024001</div></td>
+                                <td>3.85 (A)</td>
+                                <td>30 Juz (Lunas)</td>
+                                <td>98 Point</td>
+                                <td><span class="badge bg-success">Lunas</span></td>
+                                <td><span class="badge bg-success">CLEAR / QUALIFIED</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/core/edu-store.js"></script>
+<script src="assets/js/core/edu-fault-guard.js"></script>
+<script src="assets/js/core/edu-student-lifecycle.js"></script>
+<script src="assets/js/core/edu-login.js"></script>
+<script src="assets/js/core/edu-auth.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/modules/graduation/index.js"></script>
+<script>
+    AtlasLayout.init('graduation');
+    function _bootModule() {
+        if (window.EduGraduation && typeof EduGraduation.openModule === 'function') {
+            EduGraduation.openModule();
+        }
+    }
+    window.addEventListener('atlas:ready', _bootModule);
+    document.addEventListener('DOMContentLoaded', _bootModule);
+</script>
+</body>
+</html>

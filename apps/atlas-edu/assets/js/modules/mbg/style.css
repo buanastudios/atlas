@@ -1,0 +1,223 @@
+/**
+ * Atlas Edu — MBG Module Styles  (style.css)
+ * Program Makan Bergizi Gratis — SD At-Tibyan
+ */
+
+.mbg-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ── Hero & Stat Badges ── */
+.mbg-stat-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mbg-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.mbg-badge-layak {
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.mbg-badge-tidak-layak {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── Interactive Organoleptic Test Matrix ── */
+.organoleptic-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.organoleptic-table th, 
+.organoleptic-table td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    vertical-align: middle;
+}
+
+.organoleptic-chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.organoleptic-chip {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1.5px solid #cbd5e1;
+    background: #f8fafc;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+    transition: all 0.15s ease;
+}
+
+.organoleptic-chip input[type="checkbox"] {
+    display: none;
+}
+
+.organoleptic-chip.selected-positive {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #047857;
+}
+
+.organoleptic-chip.selected-negative {
+    background: #fef2f2;
+    border-color: #ef4444;
+    color: #b91c1c;
+}
+
+/* ── Form Section Containers ── */
+.mbg-section-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.mbg-section-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── Official Document Paper Layout (matches reference image FRM-MBG-01) ── */
+.official-paper-wrapper {
+    background: #525659;
+    padding: 24px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.official-paper-sheet {
+    background: #ffffff;
+    width: 100%;
+    max-width: 960px;
+    padding: 32px 36px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    color: #000;
+    font-family: 'Inter', Arial, sans-serif;
+    position: relative;
+    border: 2px solid #000;
+}
+
+.official-doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #000;
+    margin-bottom: 8px;
+    font-size: 11px;
+}
+
+.official-doc-table th, 
+.official-doc-table td {
+    border: 1.5px solid #000;
+    padding: 6px 8px;
+    color: #000;
+}
+
+.official-header-title {
+    font-weight: 900;
+    font-size: 13px;
+    line-height: 1.25;
+    text-transform: uppercase;
+}
+
+.official-section-heading {
+    background: #fff;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 4px 6px;
+}
+
+.official-checkbox-box {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid #000;
+    margin-right: 4px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 9px;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+/* ── Signature Box ── */
+.sig-zone {
+    border: 1.5px solid #000;
+    min-height: 64px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 4px;
+    font-weight: 600;
+}
+
+/* ── Print Media Query for Direct 1-Click Printing ── */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .official-paper-sheet, 
+    .official-paper-sheet * {
+        visibility: visible;
+    }
+    .official-paper-sheet {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 10mm 15mm !important;
+        box-shadow: none !important;
+        border: 2px solid #000 !important;
+    }
+    .no-print {
+        display: none !important;
+    }
+}
